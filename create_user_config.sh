@@ -1,6 +1,5 @@
-#Please run this scrpt in kubernetes-master/0 in order to create a user config file.
 #!/bin/bash
-
+  
 set -x 
 
 # Required parameters for running this script
@@ -9,10 +8,13 @@ if [ $# -lt 1 ] || [ $# -gt 2 ]; then
         exit 1
 fi
 
-KUBE_URL=https://X.X.X.X:6443
+KUBE_URL=https://172.29.100.185:6443
 CLUSTER=juju-cluster
 CRT_DAYS=365
 USER_NAME=$1
+#Cluster wild PKI location (easyrsa)
+#/var/lib/juju/agents/unit-easyrsa-0/charm/EasyRSA-3.0.1/pki/ca.crt
+#/var/lib/juju/agents/unit-easyrsa-0/charm/EasyRSA-3.0.1/pki/private/ca.key
 CA_CRT_PATH=/root/certs/ca.crt
 CA_KEY_PATH=/root/certs/ca.key
 
@@ -46,3 +48,4 @@ EOF
 
 #Apply this rolebinding as admin 
 kubectl apply -f default_user.yaml --kubeconfig /root/.kube/config
+
